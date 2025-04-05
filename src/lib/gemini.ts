@@ -7,6 +7,8 @@ const model = genAI.getGenerativeModel({
 })
 
 const SCRIPT_PROMPT = `Write a two different script for 30 seconds video on Topic : {topic},
+-Do not add Scene Description,
+-Do not add anything in Braces, just return the plain story in text
 -Give me response in JSON format and follow the schema
 -{
 scripts:[
