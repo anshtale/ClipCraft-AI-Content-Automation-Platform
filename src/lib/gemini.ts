@@ -24,7 +24,7 @@ export const generateScript = async(topic:string)=>{
 
     try{
         const response = await model.generateContent(prompt);
-        return response.response.text;
+        return response.response.text();
     }catch(e){
         return ""
     }
