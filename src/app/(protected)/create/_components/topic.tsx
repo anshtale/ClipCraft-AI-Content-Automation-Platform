@@ -4,21 +4,22 @@ import { Input } from '@/components/ui/input'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from '@/components/ui/textarea'
 import { suggestion } from '@/lib/suggestions'
-import type { CreateVideoForm } from '@/lib/custom_types/createForm'
+import type { CreateVideoForm, Response, Script } from '@/lib/custom_types/createForm'
 
 import React, { useState } from 'react'
-import { SparkleIcon } from 'lucide-react'
+import { Loader2Icon, SparkleIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { useMutation } from '@tanstack/react-query'
-import { generateScript } from '@/lib/gemini'
 import { api } from '@/trpc/react'
+import { toast } from 'sonner'
 
 function Topic() {
     const { control, setValue, watch, trigger } = useFormContext<CreateVideoForm>();
     
-    const [scripts, setScripts] = useState([])
+    const [scripts, setScripts] = useState<Script[]>([])
     const getScript = api.project.getScript.useMutation();
+    
+    const [selectedIndex,setSelectedIndex] = useState<number | null>(null);
 
     const handleScriptClick = async()=>{
         const isValid = await trigger(['title', 'topic'])
@@ -26,8 +27,14 @@ function Topic() {
         if(isValid){
             const topic = watch('topic')
             getScript.mutate({topic},{
-                onSuccess: (data) => {
-                    console.log(data);
+                onSuccess: async(data) => {
+                    const JSON_scripts:Response= await JSON.parse(data);
+                    
+                    setScripts(JSON_scripts.scripts)
+                    toast.success('Scripts generated successfully!')
+                },
+                onError:(e)=>{
+                    toast.error('Failed to generate scripts')
                 }
             })
         }   
@@ -93,11 +100,31 @@ function Topic() {
                         />
                     </TabsContent>
                 </Tabs>
+
+                {scripts?.length > 0 && 
+                <div className='mt-3'>
+                    <h2>Select the script</h2>
+                    <div className='grid grid-cols-2 gap-5 mt-1'>
+                        {
+                            scripts.map((script, index) => {
+                                return ( 
+                                <div className = {`"p-3 border rounded-lg cursor-pointer ${selectedIndex === index && 'border-white bg-secondary'}"`}
+                                onClick={()=>setSelectedIndex(index)}
+                                key={index}>
+                                    <h2 className='line-clamp-4 text-sm text-gray-300'>{script.content}</h2>
+                                </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>
+                }
             </div>
-            <Button onClick = {handleScriptClick} className='mt-3' size={'sm'}>
+            {!scripts && <Button disabled = {getScript.isPending} onClick = {handleScriptClick} className='mt-3' size={'sm'}>
+                {getScript.isPending && <Loader2Icon className='animate-spin'/>}
                 <SparkleIcon />
                 Generate Script
-            </Button>
+            </Button>}
         </div>
     )
 }
