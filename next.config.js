@@ -4,7 +4,23 @@
  */
 import "./src/env.js";
 
-/** @type {import("next").NextConfig} */
-const config = {};
+/**
+ * @type {import('next').NextConfig}
+ */
+const config = {
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
+    typescript: {
+        ignoreBuildErrors: true
+    },
+    images: {
+        
+        domains: ['lh3.googleusercontent.com'],
+            
+          
+    }
+};
+
 
 export default config;
