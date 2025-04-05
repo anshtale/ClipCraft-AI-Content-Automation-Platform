@@ -22,13 +22,15 @@ function CreatePage() {
     <div>
         <h2 className="text-3xl">Create New Video</h2>
         <div className="grid grid-cols-1 md:grid-cols-3">
-        <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(handleSubmit)}>
-            <div className="col-span-2 p-7 border rounded-xl mt-8">
-              <Topic />
-            </div>
-          </form>
-        </FormProvider>
+          <div className="col-span-2 p-7 border rounded-xl mt-8">
+            <FormProvider {...methods}>
+              <form onSubmit={methods.handleSubmit(handleSubmit)}>
+                <div>
+                  <Topic />
+                </div>
+              </form>
+            </FormProvider>
+          </div>
           <div>
             {/* {Preview Component} */}
           </div>

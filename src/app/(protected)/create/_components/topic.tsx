@@ -10,10 +10,28 @@ import React, { useState } from 'react'
 import { SparkleIcon } from 'lucide-react'
 import { useFormContext } from 'react-hook-form'
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { useMutation } from '@tanstack/react-query'
+import { generateScript } from '@/lib/gemini'
+import { api } from '@/trpc/react'
 
 function Topic() {
-    const { control, setValue, watch } = useFormContext<CreateVideoForm>();
+    const { control, setValue, watch, trigger } = useFormContext<CreateVideoForm>();
     
+    const [scripts, setScripts] = useState([])
+    const getScript = api.project.getScript.useMutation();
+
+    const handleScriptClick = async()=>{
+        const isValid = await trigger(['title', 'topic'])
+
+        if(isValid){
+            const topic = watch('topic')
+            getScript.mutate({topic},{
+                onSuccess: (data) => {
+                    console.log(data);
+                }
+            })
+        }   
+    }
 
     return (
         <div>
@@ -76,7 +94,7 @@ function Topic() {
                     </TabsContent>
                 </Tabs>
             </div>
-            <Button className='mt-3' size={'sm'}>
+            <Button onClick = {handleScriptClick} className='mt-3' size={'sm'}>
                 <SparkleIcon />
                 Generate Script
             </Button>
