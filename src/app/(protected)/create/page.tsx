@@ -1,7 +1,40 @@
+"use client"
+import { useState } from "react"
+import { useForm, FormProvider } from "react-hook-form"
+import Topic from "./_components/topic"
+import { createVideoSchema, type CreateVideoForm } from "@/lib/custom_types/createForm"
+import { zodResolver } from "@hookform/resolvers/zod"
+
 function CreatePage() {
+  const methods = useForm<CreateVideoForm>({
+    resolver: zodResolver(createVideoSchema),
+    defaultValues: {
+      title: "",
+      topic: "",
+    }
+  })
+
+  const handleSubmit = () =>{
+    console.log(methods.getValues())
+  }
+  
   return (
-    <div>CreatePage</div>
+    <div>
+        <h2 className="text-3xl">Create New Video</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3">
+        <FormProvider {...methods}>
+          <form onSubmit={methods.handleSubmit(handleSubmit)}>
+            <div className="col-span-2 p-7 border rounded-xl mt-8">
+              <Topic />
+            </div>
+          </form>
+        </FormProvider>
+          <div>
+            {/* {Preview Component} */}
+          </div>
+        </div>
+    </div>
   )
 }
 
-export default CreatePage
+export default CreatePage 

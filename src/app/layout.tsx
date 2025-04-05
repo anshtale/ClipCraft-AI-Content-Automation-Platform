@@ -20,10 +20,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <TRPCReactProvider>
-          <ThemeProvider>
+          <ThemeProvider
+             attribute="class"
+             defaultTheme="system"
+             enableSystem
+             disableTransitionOnChange
+          >
             {children}
           </ThemeProvider>
           </TRPCReactProvider>

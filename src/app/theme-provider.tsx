@@ -3,10 +3,13 @@
 import { ThemeProvider as NextThemesProvider } from "next-themes"
 import type React from "react"
 
-export function ThemeProvider({children} : {children : React.ReactNode}){
+export function ThemeProvider({
+    children,
+    ...props
+  }: React.ComponentProps<typeof NextThemesProvider>){
     return (
         <div>
-            <NextThemesProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <NextThemesProvider {...props}>
                 {children}
             </NextThemesProvider>
         </div>
