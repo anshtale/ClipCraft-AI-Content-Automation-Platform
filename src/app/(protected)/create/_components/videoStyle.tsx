@@ -33,7 +33,7 @@ function VideoStyle() {
             <h2>
                 Video Styles
             </h2>
-            <p className='text-sm text-gray-400 mb-1'>
+            <p className='text-sm text-gray-600 mb-1'>
                 Select video style
             </p>
             <div className='grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2'>
@@ -51,8 +51,6 @@ function VideoStyle() {
                             <h2 className='absolute bottom-1 text-center w-full'>
                                 {option.name}
                             </h2>
-                        
-
                         </div>
                     )
                 })}

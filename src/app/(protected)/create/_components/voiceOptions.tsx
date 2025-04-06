@@ -50,7 +50,7 @@ function VoiceOptions() {
     return (
         <div className="mt-5">
             <h2>Video Voice</h2>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-600">
                 Select voice for the video
             </p>
             <ScrollArea className="h-[200px] w-full p-4">
