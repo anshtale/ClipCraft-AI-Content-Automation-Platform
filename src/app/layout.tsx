@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Inter} from "next/font/google";
+import { Toaster } from "sonner";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { ThemeProvider } from "./theme-provider";
@@ -31,6 +32,7 @@ export default function RootLayout({
           >
             {children}
           </ThemeProvider>
+          <Toaster richColors/>
           </TRPCReactProvider>
       </body>
     </html>
