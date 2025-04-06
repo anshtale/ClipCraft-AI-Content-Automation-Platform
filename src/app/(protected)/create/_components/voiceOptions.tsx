@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { ScrollArea } from "@/components/ui/scroll-area"
 
 
-const voiceOptions = [
+export const voiceOptions = [
     {
         "value" : "am_onyx",
         "name" : "Onyx (Male)"

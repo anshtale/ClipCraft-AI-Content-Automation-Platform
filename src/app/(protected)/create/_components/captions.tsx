@@ -1,6 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import type { CreateVideoForm } from "@/lib/custom_types/createForm";
-const options = [
+export const options = [
     {
         name: 'Youtuber',
         style: 'text-yellow-400 text-3xl font-extrabold uppercase tracking-wide drop-shadow-md px-3 py-1 rounded-lg'
@@ -24,7 +24,7 @@ const options = [
 ]
 
 function Captions() {
-    const { control, setValue, watch, trigger } = useFormContext<CreateVideoForm>();
+    const { setValue, watch } = useFormContext<CreateVideoForm>();
     return (
         <div>
             <h2>Caption Style</h2>

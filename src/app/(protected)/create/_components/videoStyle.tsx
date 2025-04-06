@@ -1,4 +1,4 @@
-const options = [
+export const options = [
     {
         name: 'Realistic',
         image: '/realistic.png'
