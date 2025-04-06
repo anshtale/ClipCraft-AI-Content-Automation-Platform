@@ -61,10 +61,56 @@ function Topic() {
 
             <div className='mt-5'>
                 <h2>Video Topic</h2>
-                <p className='text-sm text-gray-600'>Select Topic for your video </p>
+                <p className='text-sm text-gray-600'>Select topic for your video </p>
 
                 <Tabs defaultValue="suggestion" className="w-full mt-2">
-                    <TabsList>
+                    <FormField
+                        control={control}
+                        name='topic'
+                        render = {({field})=>(
+                            <FormItem>
+                                <TabsList>
+                                    <TabsTrigger value="suggestion">Suggestions</TabsTrigger>
+                                    <TabsTrigger value="your_topic">Your topic</TabsTrigger>
+                                </TabsList>
+                                <TabsContent value="suggestion">
+                                    <div>
+                                        {suggestion.map((s, index) => {
+                                            return (
+                                                <FormControl key={index}>
+                                                    <Button onClick={() => {
+                                                        setValue('topic', s, {
+                                                            shouldDirty: true,
+                                                            shouldValidate: true
+                                                        })
+                                                    }} className={`m-1 text-sm text-gray-400 ${watch('topic') === s && 'bg-gray-500 text-white'}`}  variant={'outline'}>{s}</Button>
+                                                </FormControl>
+                                            )
+                                        })}
+                                        <FormMessage/>
+                                    </div>
+                                </TabsContent>
+                                <TabsContent value="your_topic">
+                                    <FormField
+                                        control={control}
+                                        name='topic'
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>
+                                                    Enter your own topic
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Textarea placeholder='Enter your topic/script' {...field} />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </TabsContent>
+                            </FormItem>    
+                        )}
+                    />
+                    {/* <TabsList>
                         <TabsTrigger value="suggestion">Suggestions</TabsTrigger>
                         <TabsTrigger value="your_topic">Your topic</TabsTrigger>
                     </TabsList>
@@ -99,7 +145,8 @@ function Topic() {
                             )}
                         />
                     </TabsContent>
-                </Tabs>
+                 */}
+                 </Tabs>
 
                 {scripts?.length > 0 && 
                 <div className='mt-3'>
@@ -108,10 +155,12 @@ function Topic() {
                         {
                             scripts.map((script, index) => {
                                 return ( 
-                                <div className = {`"p-3 border rounded-lg cursor-pointer ${selectedIndex === index && 'border-white bg-secondary'}"`}
-                                onClick={()=>setSelectedIndex(index)}
+                                <div onClick= {()=>{
+                                    setValue('script',script.content)
+                                    setSelectedIndex(index)
+                                }}className = {`"p-3 border rounded-lg cursor-pointer ${selectedIndex === index && 'border-white bg-secondary'}"`}
                                 key={index}>
-                                    <h2 className='line-clamp-4 text-sm text-gray-300'>{script.content}</h2>
+                                    <h2 className='p-3 text-sm text-gray-300'>{script.content}</h2>
                                 </div>
                                 )
                             })
@@ -120,7 +169,7 @@ function Topic() {
                 </div>
                 }
             </div>
-            {!scripts && <Button disabled = {getScript.isPending} onClick = {handleScriptClick} className='mt-3' size={'sm'}>
+            {scripts.length === 0 && <Button disabled = {getScript.isPending} onClick = {()=>handleScriptClick()} className='mt-3' size={'sm'}>
                 {getScript.isPending && <Loader2Icon className='animate-spin'/>}
                 <SparkleIcon />
                 Generate Script
