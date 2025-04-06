@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import VideoStyle from "./_components/videoStyle"
 import VoiceOptions from "./_components/voiceOptions"
 import Captions from "./_components/captions"
+import { Button } from "@/components/ui/button"
+import { WandSparkles } from "lucide-react"
 
 
 function CreatePage() {
@@ -20,7 +22,8 @@ function CreatePage() {
       captionStyle:{
         name: 'Youtuber',
         style: 'text-yellow-400 text-3xl font-extrabold uppercase tracking-wide drop-shadow-md px-3 py-1 rounded-lg'
-      }
+      },
+      script:""
     }
   })
 
@@ -40,6 +43,11 @@ function CreatePage() {
                   <VideoStyle/>
                   <VoiceOptions/>
                   <Captions/>
+
+                  <Button className = "w-full mt-5 flex items-center justify-center" type="submit">
+                    <WandSparkles/>
+                    Generate Video
+                  </Button>
                 </div>
               </form>
             </FormProvider>
