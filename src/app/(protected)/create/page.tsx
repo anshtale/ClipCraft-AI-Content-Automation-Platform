@@ -6,6 +6,8 @@ import { createVideoSchema, type CreateVideoForm } from "@/lib/custom_types/crea
 import { zodResolver } from "@hookform/resolvers/zod"
 import VideoStyle from "./_components/videoStyle"
 import VoiceOptions from "./_components/voiceOptions"
+import Captions from "./_components/captions"
+
 
 function CreatePage() {
   const methods = useForm<CreateVideoForm>({
@@ -14,7 +16,11 @@ function CreatePage() {
       title: "",
       topic: "",
       videoStyle: "Realistic",
-      voiceStyle: ""
+      voiceStyle: "am_onyx",
+      captionStyle:{
+        name: 'Youtuber',
+        style: 'text-yellow-400 text-3xl font-extrabold uppercase tracking-wide drop-shadow-md px-3 py-1 rounded-lg'
+      }
     }
   })
 
@@ -33,6 +39,7 @@ function CreatePage() {
                   <Topic />
                   <VideoStyle/>
                   <VoiceOptions/>
+                  <Captions/>
                 </div>
               </form>
             </FormProvider>
