@@ -53,14 +53,21 @@ function VoiceOptions() {
             <p className="text-sm text-gray-400">
                 Select voice for the video
             </p>
-            <ScrollArea className="h-[200px] p-4 w-full">
+            <ScrollArea className="h-[200px] w-full p-4">
                 <div className="grid grid-cols-2 gap-3">
                     {voiceOptions.map((option,index)=>{
                         return (
-                            <h2 className={`cursor-pointer p-3 dark:bg-slate-900 dark:border-white rounded-lg hover:border
-                            ${option.value === watch('videoStyle') && "border"}`} 
-                            key={index} 
-                            onClick={()=>setValue('voiceStyle',option.value)}
+                            <h2 key={index} className={`cursor-pointer p-3 dark:bg-slate-900 dark:border-white rounded-lg hover:border
+                            ${watch('voiceStyle') === option.value && 'border border-white'}}`} 
+                             
+                            onClick={()=>{
+                                setValue('voiceStyle',option.value,{
+                                    shouldDirty: true,
+                                    shouldValidate: true
+                                })
+                                console.log(watch('voiceStyle'))
+                            }
+                        }
                             >
                                 {option.name}
                             </h2>
