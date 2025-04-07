@@ -10,9 +10,13 @@ import Captions from "./_components/captions"
 import { Button } from "@/components/ui/button"
 import { WandSparkles } from "lucide-react"
 import Preview from "./_components/preview"
+import { toast } from "sonner"
+import { api } from "@/trpc/react"
 
 
 function CreatePage() {
+  const generateVideoData = api.project.generateVideoData.useMutation();
+
   const methods = useForm<CreateVideoForm>({
     resolver: zodResolver(createVideoSchema),
     defaultValues: {
@@ -29,8 +33,30 @@ function CreatePage() {
   })
 
 
-  const handleSubmit = () => {
-    console.log(methods.getValues())
+  const generateVideo = async() => {
+    console.log("triggered")
+    const validForm = await methods.trigger("script");
+
+    console.log(validForm)
+
+    if(!validForm){
+      toast.error("Enter all the required fields to generate video!");
+      return;
+    }
+
+    const response = generateVideoData.mutate(methods.getValues(),{
+      onSuccess: (data) => {
+        console.log(data)
+        toast.success('Generating your video!')
+      },
+      onError:(e)=>{
+        toast.error('Error in generating your video')
+      }
+    })
+
+    // console.log(response);
+
+
   }
 
   return (
@@ -41,7 +67,7 @@ function CreatePage() {
       <div className="grid gap-2 grid-cols-1 md:grid-cols-3">
         <div className="col-span-2 p-7 border rounded-xl mt-8 h-[72vh] overflow-auto">
           <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(handleSubmit)}>
+            <form onSubmit={methods.handleSubmit(generateVideo)}>
               <div>
                 <Topic />
                 <VideoStyle />
