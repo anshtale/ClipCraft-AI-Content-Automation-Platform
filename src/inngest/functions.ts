@@ -1,6 +1,6 @@
 import type { CreateVideoForm } from "@/lib/custom_types/createForm";
 import { inngest } from "./client";
-import { StartSpeechSynthesisTaskCommand, PollyClient, OutputFormat, VoiceId, type Voice, type SynthesisTask, GetSpeechSynthesisTaskCommand } from "@aws-sdk/client-polly";
+import { StartSpeechSynthesisTaskCommand, PollyClient, OutputFormat, VoiceId, type Voice, type SynthesisTask, GetSpeechSynthesisTaskCommand, TextType } from "@aws-sdk/client-polly";
 
   
 // Get the original event type
@@ -26,9 +26,9 @@ type VideoData = {
 }
 
 const pollyClient = new PollyClient({
-    region: process.env.AWS_REGION,
+    region: process.env.AWS_REGION!,
     credentials: {
-      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+      accessKeyId: process.env.AWS_ACCESS_KEY!,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
     }
 });
@@ -51,26 +51,17 @@ export const generateVideoData = inngest.createFunction(
         step:any
     }) => {
             const params = {
-                OutputFormat: OutputFormat.MP3,
-                OutputS3BucketName:process.env.AWS_BUCKET_NAME,
-                Text: event.data?.script,
-                TextType: "text",
-                VoiceId: event.data?.voiceStyle || "Aditi",
+                OutputFormat: OutputFormat.MP3 as OutputFormat,
+                OutputS3BucketName:process.env.AWS_BUCKET_NAME!,
+                Text: event.data?.script || "",
+                TextType: "text" as TextType,
+                VoiceId: VoiceId.Joey,
                 SampleRate: "22050"
             }
-
-            const voiceStyle = (event.data?.voiceStyle || 'Aditi') as VoiceId
-
+            
             const synthTask : SynthesisTask | undefined = await step.run("start-synthesis-task", async () => {
                 try{
-                    const command = new StartSpeechSynthesisTaskCommand({
-                        OutputFormat: "mp3",
-                        OutputS3BucketName: process.env.AWS_BUCKET_NAME,
-                        Text: event.data?.script || "",
-                        TextType: "text",
-                        VoiceId: voiceStyle,
-                        SampleRate: "24000"
-                    });
+                    const command = new StartSpeechSynthesisTaskCommand(params);
                     
                     const response = await pollyClient.send(command);
     
@@ -90,7 +81,7 @@ export const generateVideoData = inngest.createFunction(
                 let taskStatus = synthTask.TaskStatus;
 
                 let attempts = 0;
-                const maxAttempts = 15; // Maximum polling attempts
+                const maxAttempts = 10; // Maximum polling attempts
                 let taskDetails : SynthesisTask | undefined= synthTask;
                 
                 while (taskStatus !== "completed" && taskStatus !== "failed" && attempts < maxAttempts) {
@@ -122,6 +113,8 @@ export const generateVideoData = inngest.createFunction(
                 console.log(taskDetails);
                 return taskDetails;
             });
+
+            
 
 
 
