@@ -3,6 +3,8 @@ import { inngest } from "./client";
 import { StartSpeechSynthesisTaskCommand, PollyClient, OutputFormat, VoiceId, type Voice, type SynthesisTask, GetSpeechSynthesisTaskCommand, TextType } from "@aws-sdk/client-polly";
 import {generateImagePrompts} from "../lib/gemini"
 import axios from "axios"
+import { api } from "@/trpc/react";
+import { db } from "@/server/db";
 
 // Get the original event type
 type InngestEvent = {
@@ -23,7 +25,8 @@ type VideoData = {
         name: string,
         style: string
     },
-    script: string
+    script: string,
+    videoId: string
 }
 
 const pollyClient = new PollyClient({
@@ -70,6 +73,19 @@ export const generateVideoData = inngest.createFunction(
             VoiceId: VoiceId.Joey,
             SampleRate: "22050"
         }
+
+        // const trpc = createTRPCProxyClient<AppRouter>({
+        //     links: [
+        //       httpBatchLink({
+        //         url: `${process.env.NEXTAUTH_URL}/api/trpc`,
+        //         headers: () => ({
+        //             authorization: event.data?.token || '',
+        //         }),
+        //         transformer: superjson
+        //       }),
+        //     ],
+        // });
+
 
         const synthTask: SynthesisTask | undefined = await step.run("start-synthesis-task", async () => {
             try {
@@ -126,7 +142,6 @@ export const generateVideoData = inngest.createFunction(
             console.log(taskDetails);
             return taskDetails;
         });
-
 
         // generate captions
         const captions = await step.run("generate-captions",
@@ -198,11 +213,26 @@ export const generateVideoData = inngest.createFunction(
                         return result.data.image;
                     })
                 )
-                
+
                 return images;
             }
         )
 
         //save all data to db
+        const updateDB = await step.run("update-DB",
+            async () => {
+                const response = await db.videoData.update({
+                    where:{
+                        id : event.data?.videoId
+                      },data:{
+                        audioUrl : "",
+                        images : [],
+                        captionJson : []
+                      }
+                })
+
+                return response
+            }
+        )
     }
 )
