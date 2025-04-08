@@ -30,5 +30,36 @@ export const projectRouter = createTRPCRouter({
     });
 
     return response;
+  }),
+
+  createVideoData: protectedProcedure.input(z.object({
+    title: z.string(),
+    topic :z.string(),
+    script :z.string(),
+    videoStyle: z.string(),
+    voiceStyle :z.string(),
+    caption :z.any(),
+
+    images :z.any(),
+    audioUrl: z.string().optional(),
+    captionJson :z.string().optional(),
+
+  })).mutation(async ({ctx,input})=>{
+    return await ctx.db.videoData.create({
+      data:{
+        userId : ctx.session.user.id,
+        caption : input.caption,
+        title : input.title,
+        topic : input.topic,
+        script : input.script,
+        videoStyle : input.videoStyle,
+        voiceStyle : input.voiceStyle,
+        images : input.images,
+        audioUrl : input.audioUrl,
+        captionJson : input.captionJson,
+        createdBy : ctx.session.user.email
+      }
+    })
   })
+  
 })

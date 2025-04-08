@@ -8,14 +8,17 @@ import VideoStyle from "./_components/videoStyle"
 import VoiceOptions from "./_components/voiceOptions"
 import Captions from "./_components/captions"
 import { Button } from "@/components/ui/button"
-import { WandSparkles } from "lucide-react"
+import { Loader2Icon, WandSparkles } from "lucide-react"
 import Preview from "./_components/preview"
 import { toast } from "sonner"
 import { api } from "@/trpc/react"
+import { watch } from "fs"
 
 
 function CreatePage() {
   const generateVideoData = api.project.generateVideoData.useMutation();
+
+  const createVideoData = api.project.createVideoData.useMutation();
 
   const methods = useForm<CreateVideoForm>({
     resolver: zodResolver(createVideoSchema),
@@ -44,6 +47,24 @@ function CreatePage() {
       return;
     }
 
+    const {title,topic,videoStyle,voiceStyle,script,captionStyle,} = methods.getValues();
+
+    const videoData = createVideoData.mutate({
+        title,
+        topic,
+        script,
+        videoStyle,
+        voiceStyle,
+        caption: captionStyle
+    },{
+      onSuccess:(data)=>{
+        toast.success('Project Created!')
+      },
+      onError: (e)=>{
+        toast.error(`Error while creating project - ${e.message}`);
+      }
+    })
+
     const response = generateVideoData.mutate(methods.getValues(),{
       onSuccess: (data) => {
         console.log(data)
@@ -53,6 +74,7 @@ function CreatePage() {
         toast.error('Error in generating your video')
       }
     })
+
 
     // console.log(response);
 
@@ -74,7 +96,8 @@ function CreatePage() {
                 <VoiceOptions />
                 <Captions />
 
-                <Button className="w-full mt-5 flex items-center justify-center" type="submit">
+                <Button disabled = {generateVideoData.isPending || createVideoData.isPending} className="w-full mt-5 flex items-center justify-center" type="submit">
+                  {generateVideoData.isPending || createVideoData.isPending && <Loader2Icon className='animate-spin'/>}
                   <WandSparkles />
                   Generate Video
                 </Button>

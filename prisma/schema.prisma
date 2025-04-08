@@ -77,7 +77,7 @@ model VerificationToken {
 
 model VideoData{
     id String @id @default(cuid())
-    createdBy String
+    createdBy String?
 
     title String
     topic String
@@ -86,7 +86,6 @@ model VideoData{
     voiceStyle String
 
     caption Json
-    voice String
     images Json?
     audioUrl String?
 
