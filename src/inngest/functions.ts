@@ -1,7 +1,7 @@
 const { createClient } = require("@deepgram/sdk");
 import { inngest } from "./client";
 import { StartSpeechSynthesisTaskCommand, PollyClient, OutputFormat, VoiceId, type Voice, type SynthesisTask, GetSpeechSynthesisTaskCommand, TextType } from "@aws-sdk/client-polly";
-
+import {generateImagePrompts} from "../lib/gemini"
 
 // Get the original event type
 type InngestEvent = {
@@ -33,8 +33,16 @@ const pollyClient = new PollyClient({
     }
 });
 
-
 const deepgram = createClient(process.env.DEEPGRAM_API_KEY);
+
+const ImagePromptScript : string = `Generate Image prompt of {style} with all details for each scene for 30 seconds video : script : {script}
+
+- Do not give camera angle image prompt
+-Follow the following schema and return JSON data (Max 4-5 Images)- [
+    {   imagePrompt:'',
+        sceneContent: '<ScriptContent>'    
+    }
+]`
 
 // export const helloWorld = inngest.createFunction(
 //     { id: "hello-world" },
@@ -136,14 +144,36 @@ export const generateVideoData = inngest.createFunction(
 
                 if(error) throw error
 
-                return result;
+                return result.results?.channels[0]?.alternatives[0]?.words;
             }
         )
 
-
         //generate images prompt from script
+        const getImagePrompts = await step.run(
+            "generateImagePrompts",
+            async()=>{
+                const prompt = ImagePromptScript.replace('{style}',event.data?.videoStyle || " ").replace('{script}',event.data?.script || " ")
+
+                try{
+                    const response = await generateImagePrompts.sendMessage(prompt);
+
+                    const imagePrompts = response.response.text();
+                    const jsonMatch = imagePrompts.match(/\[[\s\S]*\]/);
+
+                    const jsonString = jsonMatch ? jsonMatch[0] : imagePrompts;
+
+                    const JSON_image_prompts = await JSON.parse(jsonString);
+                    
+                    return JSON_image_prompts;
+                }catch(e){
+                    console.log(e)
+                    return " "
+                }
+            }
+        )
 
         //generate images using AI
+         
 
         //save all data to db
     }
