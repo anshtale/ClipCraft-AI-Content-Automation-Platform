@@ -2,6 +2,7 @@ const { createClient } = require("@deepgram/sdk");
 import { inngest } from "./client";
 import { StartSpeechSynthesisTaskCommand, PollyClient, OutputFormat, VoiceId, type Voice, type SynthesisTask, GetSpeechSynthesisTaskCommand, TextType } from "@aws-sdk/client-polly";
 import {generateImagePrompts} from "../lib/gemini"
+import axios from "axios"
 
 // Get the original event type
 type InngestEvent = {
@@ -173,7 +174,34 @@ export const generateVideoData = inngest.createFunction(
         )
 
         //generate images using AI
-         
+        const generateImages = await step.run("generate-images",
+            async()=>{
+                let images = [];
+                images = await Promise.all(
+                    getImagePrompts.map(async(el:any)=>{
+                        const BASE_URL='https://aigurulab.tech';
+
+                        const result =  await axios.post(BASE_URL+'/api/generate-image',
+                                {
+                                    width: 1024,
+                                    height: 1024,
+                                    input: el?.imagePrompt,
+                                    model: 'sdxl',
+                                    aspectRatio:"1:1"
+                                },
+                                {
+                                headers: {
+                                    'x-api-key': process.env.IMAGE_GENERATOR_API_KEY,
+                                    'Content-Type': 'application/json',
+                                },
+                        })
+                        return result.data.image;
+                    })
+                )
+                
+                return images;
+            }
+        )
 
         //save all data to db
     }
