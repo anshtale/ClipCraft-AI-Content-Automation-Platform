@@ -85,11 +85,11 @@ model VideoData{
     videoStyle String
     voiceStyle String
 
-    caption Json
+    caption Json //this represent caption style
     images Json?
     audioUrl String?
 
-    captionJson String?
+    captionJson Json?
 
     userId String
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
