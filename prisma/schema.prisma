@@ -64,6 +64,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+    videoData VideoData[]
 }
 
 model VerificationToken {
@@ -72,4 +73,26 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+model VideoData{
+    id String @id @default(cuid())
+    createdBy String
+
+    title String
+    topic String
+    script String
+    videoStyle String
+    voiceStyle String
+
+    caption Json
+    voice String
+    images Json?
+    audioUrl String?
+
+    captionJson String?
+
+    userId String
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+    
 }
