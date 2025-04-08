@@ -13,6 +13,7 @@ import Preview from "./_components/preview"
 import { toast } from "sonner"
 import { api } from "@/trpc/react"
 import { watch } from "fs"
+import { useSession } from "next-auth/react"
 
 
 function CreatePage() {
@@ -49,6 +50,8 @@ function CreatePage() {
 
     const {title,topic,videoStyle,voiceStyle,script,captionStyle,} = methods.getValues();
 
+    const values = methods.getValues();
+
     const videoData = createVideoData.mutate({
         title,
         topic,
@@ -65,7 +68,15 @@ function CreatePage() {
       }
     })
 
-    const response = generateVideoData.mutate(methods.getValues(),{
+    const response = (createVideoData.isSuccess) && (generateVideoData.mutate({
+      title,
+      topic,
+      script,
+      videoStyle,
+      voiceStyle,
+      caption: captionStyle,
+      videoId:createVideoData.data.id
+    },{
       onSuccess: (data) => {
         console.log(data)
         toast.success('Generating your video!')
@@ -73,7 +84,9 @@ function CreatePage() {
       onError:(e)=>{
         toast.error('Error in generating your video')
       }
-    })
+    }))
+
+
 
 
     // console.log(response);

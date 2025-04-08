@@ -9,7 +9,7 @@ export const createVideoSchema = z.object({
         name: z.string().min(5,"Select caption style"),
         style: z.string()
     }),
-    script: z.string().min(5,"Enter valid scri")
+    script: z.string().min(5,"Enter valid script")
 })
 
 export interface Script {

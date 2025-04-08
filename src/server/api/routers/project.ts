@@ -19,7 +19,15 @@ export const projectRouter = createTRPCRouter({
 
   }),
   
-  generateVideoData: protectedProcedure.input(createVideoSchema).mutation(async ({ ctx, input }) => {
+  generateVideoData: protectedProcedure.input(z.object({
+    title: z.string(),
+    topic :z.string(),
+    script :z.string(),
+    videoStyle: z.string(),
+    voiceStyle :z.string(),
+    caption :createVideoSchema.shape.captionStyle,
+    videoId: z.string(),
+  })).mutation(async ({ ctx, input }) => {
     
     const response = await inngest.send({
       key:"generate-video-data",
@@ -60,6 +68,7 @@ export const projectRouter = createTRPCRouter({
         createdBy : ctx.session.user.email
       }
     })
-  })
+  }),
+
   
 })
