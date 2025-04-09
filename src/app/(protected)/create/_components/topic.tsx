@@ -169,7 +169,7 @@ function Topic() {
                 </div>
                 }
             </div>
-            {scripts.length === 0 && <Button disabled = {getScript.isPending} onClick = {()=>handleScriptClick()} className='mt-3' size={'sm'}>
+            {scripts.length === 0 && <Button disabled = {getScript.isPending} onClick = {()=>handleScriptClick()} className='hover:cursor-pointer mt-3' size={'sm'}>
                 {getScript.isPending && <Loader2Icon className='animate-spin'/>}
                 <SparkleIcon />
                 Generate Script
