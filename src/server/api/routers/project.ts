@@ -8,6 +8,7 @@ import {
 import { generateScript } from "@/lib/gemini";
 import { createVideoSchema } from "@/lib/custom_types/createForm";
 import { inngest } from "@/inngest/client";
+import { TRPCError } from "@trpc/server";
 
 export const projectRouter = createTRPCRouter({
   getScript: protectedProcedure.input(z.object({
@@ -53,7 +54,18 @@ export const projectRouter = createTRPCRouter({
     captionJson :z.string().optional(),
 
   })).mutation(async ({ctx,input})=>{
-    return await ctx.db.videoData.create({
+    const currentCredits = ctx.session.user.credits;
+
+    if(currentCredits <= 0){
+      throw new TRPCError(
+        {
+          message: "Insufficient Credits",
+          code:"FORBIDDEN"
+        }
+      )
+    }
+
+    const record =  await ctx.db.videoData.create({
       data:{
         userId : ctx.session.user.id,
         caption : input.caption,
@@ -68,7 +80,22 @@ export const projectRouter = createTRPCRouter({
         createdBy : ctx.session.user.email
       }
     })
+
+    await ctx.db.user.update({where:{id: ctx.session.user.id },data:{credits:{decrement:1}}})
+
+    return record;
   }),
+
+  getUserVideos : protectedProcedure.query(async({ctx,input})=>{
+    return await ctx.db.videoData.findMany({
+      where:{
+        userId : ctx.session.user.id
+      },
+      orderBy:{
+        createdAt : "desc"
+      }
+    })
+  })
 
   
 })
