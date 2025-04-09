@@ -14,9 +14,15 @@ import { toast } from "sonner"
 import { api } from "@/trpc/react"
 import { watch } from "fs"
 import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 
 function CreatePage() {
+  const router = useRouter()
+  const session = useSession();
+
+  if(!session.data) return;
+
   const generateVideoData = api.project.generateVideoData.useMutation();
 
   const createVideoData = api.project.createVideoData.useMutation();
@@ -41,6 +47,13 @@ function CreatePage() {
     console.log("triggered")
     const validForm = await methods.trigger("script");
 
+    const currentCredits = session.data.user.credits;
+
+    if(currentCredits <= 0){
+      toast.error("You don't have enough credits to generate a video");
+      return;
+    }
+
     console.log(validForm)
 
     if(!validForm){
@@ -52,30 +65,31 @@ function CreatePage() {
 
     const values = methods.getValues();
 
-    const videoData = createVideoData.mutate({
+    const videoData = await createVideoData.mutateAsync({
         title,
         topic,
         script,
         videoStyle,
         voiceStyle,
-        caption: captionStyle
+        caption: captionStyle,
     },{
       onSuccess:(data)=>{
+        router.refresh();
         toast.success('Project Created!')
       },
       onError: (e)=>{
         toast.error(`Error while creating project - ${e.message}`);
       }
     })
-
-    const response = (createVideoData.isSuccess) && (generateVideoData.mutate({
+    
+    const response = (generateVideoData.mutate({
       title,
       topic,
       script,
       videoStyle,
       voiceStyle,
       caption: captionStyle,
-      videoId:createVideoData.data.id
+      videoId:videoData.id,
     },{
       onSuccess: (data) => {
         console.log(data)
@@ -85,13 +99,6 @@ function CreatePage() {
         toast.error('Error in generating your video')
       }
     }))
-
-
-
-
-    // console.log(response);
-
-
   }
 
   return (
@@ -109,7 +116,7 @@ function CreatePage() {
                 <VoiceOptions />
                 <Captions />
 
-                <Button disabled = {generateVideoData.isPending || createVideoData.isPending} className="w-full mt-5 flex items-center justify-center" type="submit">
+                <Button disabled = {generateVideoData.isPending || createVideoData.isPending} className="hover:cursor-pointer w-full mt-5 flex items-center justify-center" type="submit">
                   {generateVideoData.isPending || createVideoData.isPending && <Loader2Icon className='animate-spin'/>}
                   <WandSparkles />
                   Generate Video
