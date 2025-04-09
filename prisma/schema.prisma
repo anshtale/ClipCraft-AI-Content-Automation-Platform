@@ -64,7 +64,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
-    videoData VideoData[]
+    videoData     VideoData[]
 }
 
 model VerificationToken {
@@ -78,6 +78,7 @@ model VerificationToken {
 model VideoData{
     id String @id @default(cuid())
     createdBy String?
+    createdAt DateTime @default(now())
 
     title String
     topic String
