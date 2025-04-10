@@ -7,9 +7,9 @@ function LayoutProvider({  children }: {
     return (
         <SidebarProvider>
           <AppSidebar />
-          <div className='w-full'>
+          <div className='w-full flex flex-col'>
             <AppHeader /> 
-              <div className='p-10'>
+              <div className='flex-grow p-10'>
                 {children}
               </div>  
           </div>
