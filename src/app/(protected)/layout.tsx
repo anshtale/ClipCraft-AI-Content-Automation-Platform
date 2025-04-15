@@ -1,17 +1,11 @@
-import { auth } from '@/server/auth';
 import LayoutProvider from './_components/layout-provider'
 import { SessionProvider } from 'next-auth/react';
-import { redirect } from 'next/navigation';
 
-async function Layout({ children }: { children: React.ReactNode }) {
-    const session = await auth();
-
-    if(!session) return redirect('/')
-
+function ClientLayout({ children,session }: { children: React.ReactNode,session : any }) {
     return (
-        <SessionProvider session={session}>
+        <SessionProvider refetchInterval={0} refetchOnWindowFocus={false} session={session}>
             <LayoutProvider>
-                <div>
+                <div className='h-full w-full'>
                     {children}
                 </div>
             </LayoutProvider>
@@ -19,4 +13,4 @@ async function Layout({ children }: { children: React.ReactNode }) {
     )
 }
 
-export default Layout
+export default ClientLayout
