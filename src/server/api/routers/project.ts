@@ -107,6 +107,17 @@ export const projectRouter = createTRPCRouter({
         userId : ctx.session.user.id
       }
     })
+  }),
+
+  getVideoById:protectedProcedure.input(z.object({
+    videoId:z.string()
+  })).query(async({ctx,input})=>{
+    return await ctx.db.videoData.findUnique({
+      where:{
+        userId: ctx.session.user.id,
+        id:input.videoId
+      }
+    })
   })
 
   
