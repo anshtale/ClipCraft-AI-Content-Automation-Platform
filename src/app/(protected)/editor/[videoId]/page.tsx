@@ -8,39 +8,68 @@ import { useEffect, useState } from "react"
 import { useVideoDataStore } from "@/store"
 import type { CaptionStyleName } from "../../../../lib/custom_types/captionComponent"
 import { useShallow } from "zustand/shallow"
+import Spinner from "../_components/spinner"
 
 function EditorPage() {
     const { videoId } = useParams();
-    const [loading,setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-    const {setVideoData,setCaptionStyle} = useVideoDataStore(useShallow((state) => ({
-        setVideoData : state.setVideoData,
+    const { setVideoData, setCaptionStyle } = useVideoDataStore(useShallow((state) => ({
+        setVideoData: state.setVideoData,
         setCaptionStyle: state.setCaptionStyle
     })));
 
-    const {data : responseVideoData} = api.project.getVideoById.useQuery({videoId : videoId as string});
+    const { data: responseVideoData, status, error } = api.project.getVideoById.useQuery({ videoId: videoId as string });
 
-    useEffect(()=>{
-        if(responseVideoData){
+    useEffect(() => {
+        if (responseVideoData) {
             setVideoData(responseVideoData);
             setCaptionStyle(responseVideoData.videoStyle as CaptionStyleName)
             setLoading(false);
         }
-    },[responseVideoData,setVideoData,setCaptionStyle])
+    }, [responseVideoData, setVideoData, setCaptionStyle])
 
-    if(loading) return (
-        <div className="flex h-full w-full items-center justify-center">
-            <CenteredSpinner />
-        </div>
-    )
+    if (loading && status === 'pending') {
+        return (
+            <div className="flex h-full w-full items-center justify-center">
+                <CenteredSpinner />
+            </div>
+        )
+    }
+
+    if (responseVideoData && responseVideoData.status === 'pending') {
+        return (
+            <div className="flex h-full w-full items-center justify-center">
+                <div>
+                    <div className="flex items-center justify-center">
+                        <Spinner />
+                        Video is still processing...
+                    </div>
+                    <span className="w-full flex items-center justify-center text-muted-foreground text-sm">Please refresh page to get updated status</span>
+                </div>
+
+            </div>
+        )
+
+    }
+
+    if (status === 'error') {
+        return (
+            <div className="flex h-full w-full items-center justify-center">
+                <div className="text-red-500 text-lg">
+                    {error.message || "An error occurred while loading the video."}
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="border rounded-2xl p-4 border-slate-500">
-                <VideoInfo/>
+                <VideoInfo />
             </div>
             <div className=" flex items-center justify-center">
-                <RemotionPlayer/>
+                <RemotionPlayer />
             </div>
         </div>
     )
