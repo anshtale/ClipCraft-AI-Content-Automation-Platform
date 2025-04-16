@@ -3,7 +3,6 @@ import { inngest } from "./client";
 import { StartSpeechSynthesisTaskCommand, PollyClient, OutputFormat, VoiceId, type Voice, type SynthesisTask, GetSpeechSynthesisTaskCommand, TextType } from "@aws-sdk/client-polly";
 import {generateImagePrompts} from "../lib/gemini"
 import axios from "axios"
-import { api } from "@/trpc/react";
 import { db } from "@/server/db";
 
 // Get the original event type
@@ -26,7 +25,7 @@ type VideoData = {
         style: string
     },
     script: string,
-    videoId: string
+    videoId: string,
 }
 
 const pollyClient = new PollyClient({
@@ -224,15 +223,19 @@ export const generateVideoData = inngest.createFunction(
                 const response = await db.videoData.update({
                     where:{
                         id : event.data?.videoId
-                      },data:{
-                        audioUrl : "",
-                        images : [],
-                        captionJson : []
+                      },
+                      data:
+                      {
+                        audioUrl : generatedAudioFile.OutputUri,
+                        images : generateImages,
+                        captionJson : captions,
+                        status:"completed"
                       }
                 })
-
                 return response
             }
         )
+
+        return updateDB;
     }
 )
