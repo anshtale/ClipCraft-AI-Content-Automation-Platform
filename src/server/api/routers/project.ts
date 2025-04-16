@@ -112,12 +112,18 @@ export const projectRouter = createTRPCRouter({
   getVideoById:protectedProcedure.input(z.object({
     videoId:z.string()
   })).query(async({ctx,input})=>{
-    return await ctx.db.videoData.findUnique({
+    const response =  await ctx.db.videoData.findUnique({
       where:{
         userId: ctx.session.user.id,
         id:input.videoId
       }
     })
+
+    if(response === null){
+      throw new TRPCError({message: "No project found",code: "NOT_FOUND"})
+    }
+
+    return response;
   })
 
   
