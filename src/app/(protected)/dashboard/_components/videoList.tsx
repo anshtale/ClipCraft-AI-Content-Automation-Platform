@@ -26,7 +26,6 @@ function VideoList() {
         }
     );
 
-
     useEffect(() => {
         if(videoData) {
             const pendingIds = videoData
@@ -74,7 +73,8 @@ function VideoList() {
                 : <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mt-10">
                     {videoData.map((project, index) => {
                         return (
-                            <div className= "relative" key={index}>
+                            <Link href={`/editor/${project.id}`} key={index}>
+                            <div className= "hover: cursor-pointer relative" >
                                 {
                                     project.status === "completed" && Array.isArray(project.images) && project.images.length 
                                     ? 
@@ -94,6 +94,7 @@ function VideoList() {
                                     <h3 className="text-[12px] text-gray-300">{project.createdAt.toDateString()}</h3>
                                 </div>
                             </div>
+                            </Link>
                         )
                     })}
 
