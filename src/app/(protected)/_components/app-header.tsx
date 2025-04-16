@@ -6,18 +6,21 @@ import React, { useEffect } from 'react'
 
 const AppHeader = ()=>{
     const session =  useSession();
-    
-    if(!session.data?.user){
-        return;
-    }
 
     useEffect(()=>{
-        session && checkAuthenticated(); 
+        if (session && session.data?.user) {
+            checkAuthenticated();
+        }
     },[session])
+
     const checkAuthenticated = ()=>{
         if(!session.data?.user){
             return;
         }
+    }
+
+    if (!session.data?.user) {
+        return null;
     }
     
     return (
