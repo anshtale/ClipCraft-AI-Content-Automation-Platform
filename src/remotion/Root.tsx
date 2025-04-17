@@ -22,15 +22,10 @@ export const RemotionRoot: React.FC = () => {
       component={RemotionComposition}
       durationInFrames={100}
       fps={30}
-      width={1280}
-      height={720}
+      width={720}
+      height={1280}
       defaultProps={{
-        videoData: {
-          audioUrl: "",
-          images: [],
-          captionJson: [],
-        },
-        captionStyle: "default",
+        videoData,captionStyle
       }}
       calculateMetadata={async ({ props }) => {
         const captions = videoData ? videoData.captionJson as Caption[] : [];
