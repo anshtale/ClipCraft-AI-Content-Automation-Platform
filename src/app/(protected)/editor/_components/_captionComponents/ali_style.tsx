@@ -1,19 +1,18 @@
-import { useCurrentGroupIndex, useGroupedCaptions } from "@/hooks/use-captions";
-import { getWordOpacity } from "@/lib/animation-utils";
-import type { Caption } from "@/lib/custom_types/caption";
-import { useVideoDataStore } from "@/store";
-import type { PlayerRef } from "node_modules/@remotion/player/dist/cjs/player-methods";
+import { useCurrentGroupIndex, useGroupedCaptions } from "../../../../../hooks/use-captions";
+import { getWordOpacity } from "../../../../../lib/animation-utils";
+import type { Caption } from "../../../../../lib/custom_types/caption";
+
+import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 import { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { useShallow } from "zustand/shallow";
 
-export function AliStyle({ playerRef }: { playerRef: React.RefObject<PlayerRef | null> }) {
+
+export function AliStyle({videoData} : {videoData : DirectVideoData}) {
     const frame = useCurrentFrame();
       const { fps } = useVideoConfig();
     
       const currentTime = frame / fps;
     
-      const videoData = useVideoDataStore(useShallow((state) => state.videoData));
     
       const captions = videoData ? useMemo(()=>videoData.captionJson as Caption[],[videoData]) : [];
       

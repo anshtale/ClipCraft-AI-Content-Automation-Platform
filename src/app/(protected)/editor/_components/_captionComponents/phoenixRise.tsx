@@ -1,29 +1,17 @@
-import { useCurrentGroupIndex, useIshanSharmaCaptions } from '@/hooks/use-captions';
-import { getWordStyle } from '@/lib/animation-utils';
-import type { Caption } from '@/lib/custom_types/caption';
-import { useVideoDataStore } from '@/store';
-import localFont from 'next/font/local';
+import { useCurrentGroupIndex, useIshanSharmaCaptions } from "../../../../../hooks/use-captions";
+
+import type { Caption } from "../../../../../lib/custom_types/caption";
+
+import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 import React, { useMemo } from 'react'
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
-import { useShallow } from 'zustand/shallow';
 
-const captionFont = localFont({
-  src: '../../../../../../src/fonts/EuropaGroteskSH.ttf',
-  variable: '--caption-font'
-});
 
-const captionFont2 = localFont({
-  src: '../../../../../../src/fonts/KeplerStd-BoldScnItDisp.ttf',
-  variable: '--caption-font'
-});
-
-function PhoenixRise() {
+function PhoenixRise({videoData} : {videoData : DirectVideoData }) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const currentTime = frame / fps;
-
-  const videoData = useVideoDataStore(useShallow((state) => state.videoData));
 
   const captions = videoData ? useMemo(() => videoData.captionJson as Caption[], [videoData]) : [];
 
@@ -80,11 +68,10 @@ function PhoenixRise() {
 
                 return (
                   <span
-                    className={captionFont.className}
                     key={index}
                     style={{
                       fontSize: '70px',
-                      fontFamily: 'EuropaGroteskSH.ttf',
+                      fontFamily: "EuropaGroteskSH",
                       color: '#FFFFFF',
                       opacity: isVisible ? 1 : 0,
                       transform: isVisible ? 'translateY(0)' : 'translateY(15px)',
@@ -110,9 +97,8 @@ function PhoenixRise() {
               textAlign: 'center',
             }}>
               <span
-                className={captionFont2.className}
                 style={{
-                  fontFamily: 'KeplerStd-BoldScnItDisp.ttf',
+                  fontFamily: "KeplerStd-BoldScnItDisp",
                   fontSize: '85px',
                   color: '#FFD700', // Yellow/gold color for the last word
                   opacity: currentTime >= currentGroup[2]!.start ? 1 : 0,
@@ -144,12 +130,10 @@ function PhoenixRise() {
 
               return (
                 <span
-                  className={captionFont.className}
-
                   key={index}
                   style={{
                     // letterSpacing: '2px',
-                    fontFamily: 'EuropaGroteskSH.ttf',
+                    fontFamily: "EuropaGroteskSH",
                     fontSize: '70px',
                     // fontWeight: 700,
                     color: '#FFFFFF',

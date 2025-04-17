@@ -1,38 +1,24 @@
 "use client"
 import type { JsonArray } from 'inngest/helpers/jsonify';
-import React, { useCallback, useEffect, useMemo  } from 'react'
-import type {PlayerRef} from '@remotion/player';
+import React, {  useMemo  } from 'react'
 import { AbsoluteFill, Audio, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from 'remotion';
-import { useVideoDataStore } from '@/store';
 import { CAPTION_COMPONENTS, type CaptionStyleName } from '../../../../lib/custom_types/captionComponent';
-import type { Caption } from '@/lib/custom_types/caption';
-import { useShallow } from 'zustand/shallow';
+import type { Caption, DirectVideoData } from '@/lib/custom_types/caption';
 
-function RemotionComposition({playerRef} : {playerRef : React.RefObject<PlayerRef | null>}) {
+function RemotionComposition({videoData,captionStyle} : {videoData:DirectVideoData,captionStyle : CaptionStyleName}) {
     const { fps } = useVideoConfig()
     const frame = useCurrentFrame();
 
-    const {videoData,durationInFrames,setDurationInFrames} = useVideoDataStore(useShallow(
-        (state) => ({
-          videoData: state.videoData,
-          durationInFrames: state.durationInFrames,
-          setDurationInFrames: state.setDurationInFrames,
-        }))
-    );
-    
-    const captionStyle : CaptionStyleName = useVideoDataStore(useShallow(((state) => state.captionStyle)));
-    
+    const durationInFrames = useMemo(()=>{
+        const captions = videoData ? videoData.captionJson as Caption[] : [];
+        if(videoData && captions.length > 0){
+            return Number((captions[captions.length - 1]?.end! * fps).toFixed(0));
+        }else return 0;
+    },[videoData])
+
     const CaptionComponent = CAPTION_COMPONENTS[captionStyle] || CAPTION_COMPONENTS.default
     
     const imageList = useMemo(()=>videoData?.images as JsonArray,[videoData]);
-    
-    useEffect(() => {
-        const captions = videoData ? videoData.captionJson as Caption[] : [];
-        if(videoData && captions.length > 0){
-            const totalDuration = captions[captions.length - 1]?.end! * fps;
-            setDurationInFrames(totalDuration);
-        }
-    }, [videoData,setDurationInFrames,fps])
     
     if(!videoData) return null;
 
@@ -70,7 +56,7 @@ function RemotionComposition({playerRef} : {playerRef : React.RefObject<PlayerRe
                 {videoData.audioUrl && <Audio src={videoData.audioUrl}/>}
             </AbsoluteFill>
             <AbsoluteFill className='relative'>
-                <CaptionComponent playerRef={playerRef} />
+                <CaptionComponent videoData = {videoData} />
             </AbsoluteFill>
         </div>
     )

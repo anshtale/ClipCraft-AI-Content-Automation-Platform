@@ -1,5 +1,5 @@
-import { dynamicGroupCaptions, getCurrentGroupIndex, getIshanSharmaGroupCaptions, groupCaptions } from "@/lib/animation-utils";
-import type { Caption } from "@/lib/custom_types/caption";
+import { dynamicGroupCaptions, getCurrentGroupIndex, getIshanSharmaGroupCaptions, groupCaptions } from "../lib/animation-utils";
+import type { Caption } from "../lib/custom_types/caption";
 import { useMemo } from "react";
 
 export const useCurrentGroupIndex = ({groupedCaptions,currentTime} : {groupedCaptions : Caption[][],currentTime:number})=>{

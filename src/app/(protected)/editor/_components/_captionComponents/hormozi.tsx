@@ -1,19 +1,18 @@
-import { useVideoDataStore } from '@/store';
-import React, {  useMemo } from 'react'
-import type { PlayerRef } from '@remotion/player';
-import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
-import type { Caption } from '@/lib/custom_types/caption';
-import { useShallow } from 'zustand/shallow';
-import {  getScaleInterpolation } from '@/lib/animation-utils';
-import { useCurrentGroupIndex, useGroupedCaptions } from '@/hooks/use-captions';
 
-function HormoziCaption({ playerRef }: { playerRef: React.RefObject<PlayerRef | null> }) {
+import React, {  useMemo } from 'react'
+
+import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
+import type { Caption } from "../../../../../lib/custom_types/caption";
+
+import {  getScaleInterpolation } from '../../../../../lib/animation-utils';
+import { useCurrentGroupIndex, useGroupedCaptions } from "../../../../../hooks/use-captions";
+import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
+
+function HormoziCaption({videoData} : {videoData : DirectVideoData}) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const currentTime = frame / fps;
-
-  const videoData = useVideoDataStore(useShallow((state) => state.videoData));
 
   const captions = videoData ? useMemo(()=>videoData.captionJson as Caption[],[videoData]) : [];
   

@@ -1,25 +1,17 @@
-import { useCurrentGroupIndex, useDynamicallyGroupedCaptions } from "@/hooks/use-captions";
-import type { Caption } from "@/lib/custom_types/caption";
-import { useVideoDataStore } from "@/store";
+import { useCurrentGroupIndex, useDynamicallyGroupedCaptions } from "../../../../../hooks/use-captions";
+import type { Caption } from "../../../../../lib/custom_types/caption";
+
 import { useMemo } from "react";
-import type { PlayerRef } from '@remotion/player';
+
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { useShallow } from "zustand/shallow";
-import localFont from 'next/font/local';
+import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 
 
-const captionFont = localFont({ 
-  src: '../../../../../../src/fonts/coolvetica.ttf',
-  variable: '--caption-font'
-});
-
-function GahaziCaption({ playerRef }: { playerRef: React.RefObject<PlayerRef | null> }) {
+function GahaziCaption({videoData} : {videoData : DirectVideoData}) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const currentTime = frame / fps;
-
-  const videoData = useVideoDataStore(useShallow((state) => state.videoData));
 
   const captions = videoData ? useMemo(()=>videoData.captionJson as Caption[],[videoData]) : [];
   
@@ -39,9 +31,9 @@ function GahaziCaption({ playerRef }: { playerRef: React.RefObject<PlayerRef | n
       }}
     >
       <div
-      className={captionFont.className}
+      
         style={{
-          fontFamily: 'coolvetica.ttf',
+          fontFamily: "Coolvetica",
           marginBottom : '150px',
           display: 'flex',
           flexDirection: 'column',
@@ -52,9 +44,9 @@ function GahaziCaption({ playerRef }: { playerRef: React.RefObject<PlayerRef | n
         }}
       >
         <div
-        className={captionFont.className}
+
           style={{
-            fontFamily: 'coolvetica.ttf',
+            fontFamily: "Coolvetica",
             
             display: 'flex',
             flexDirection: 'row',
@@ -78,12 +70,12 @@ function GahaziCaption({ playerRef }: { playerRef: React.RefObject<PlayerRef | n
             
             return (
               <span
-              className={captionFont.className}
+
                 key={index}
                 style={{
                   fontSize: '65px',
                   fontWeight: 'bold',
-                  fontFamily: 'coolvetica.ttf',
+                  fontFamily: "Coolvetica",
                   fontStyle: 'normal',
                   color: '#FFFFFF',
                   textShadow: '5px 5px 10px rgba(0, 0, 0)',

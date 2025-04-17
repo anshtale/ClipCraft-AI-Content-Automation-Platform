@@ -1,7 +1,5 @@
 import { interpolate } from "remotion";
 import type { Caption } from "./custom_types/caption";
-import { useVideoDataStore } from "@/store";
-import { useShallow } from "zustand/shallow";
 
 export const getScaleInterpolation = (caption: Caption, frame: number, fps: number) => {
     const durationInFrames = (caption.end - caption.start) * fps;
