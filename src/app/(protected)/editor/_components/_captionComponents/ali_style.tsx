@@ -6,8 +6,8 @@ import { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 
 
-export function AliStyle({videoData} : {videoData : {
-  audioUrl: string;
+export function AliStyle({videoData} : {videoData:{
+  audioUrl: string | undefined | null ;
   images?: any;
   captionJson?: any;
 }}) {

@@ -6,8 +6,8 @@ import { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 
 
-function GahaziCaption({videoData} : {videoData : {
-  audioUrl: string;
+function GahaziCaption({videoData} : {videoData:{
+  audioUrl: string | undefined | null ;
   images?: any;
   captionJson?: any;
 }}) {

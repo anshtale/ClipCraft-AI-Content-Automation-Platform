@@ -8,8 +8,8 @@ import {  getScaleInterpolation } from '../../../../../lib/animation-utils';
 import { useCurrentGroupIndex, useGroupedCaptions } from "../../../../../hooks/use-captions";
 import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 
-function HormoziCaption({videoData} : {videoData : {
-  audioUrl: string;
+function HormoziCaption({videoData} : {videoData:{
+  audioUrl: string | undefined | null ;
   images?: any;
   captionJson?: any;
 }}) {

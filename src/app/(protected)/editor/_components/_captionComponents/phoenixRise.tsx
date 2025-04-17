@@ -6,8 +6,8 @@ import React, { useMemo } from 'react'
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
 
 
-function PhoenixRise({videoData} : {videoData : {
-  audioUrl: string;
+function PhoenixRise({videoData} : {videoData:{
+  audioUrl: string | undefined | null ;
   images?: any;
   captionJson?: any;
 } }) {

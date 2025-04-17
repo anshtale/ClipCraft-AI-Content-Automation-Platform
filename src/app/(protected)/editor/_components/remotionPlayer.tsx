@@ -12,7 +12,7 @@ function RemotionPlayer() {
     const fps = 30;
     const { videoData } = useVideoDataStore(useShallow(
         (state) => ({
-            videoData: state.videoData,
+            videoData: state.videoData, 
         }))
     );
 

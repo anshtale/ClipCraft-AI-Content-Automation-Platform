@@ -21,8 +21,6 @@ function CreatePage() {
   const router = useRouter()
   const session = useSession();
 
-  if(!session.data) return;
-
   const generateVideoData = api.project.generateVideoData.useMutation();
 
   const createVideoData = api.project.createVideoData.useMutation();
@@ -35,14 +33,14 @@ function CreatePage() {
       videoStyle: "Cinematic",
       voiceStyle: "am_onyx",
       captionStyle: {
-        name: 'Supreme',
+        name: 'ALI_STYLE',
         style: 'text-white text-3xl font-bold italic drop-shadow-lg tracking-wide px-3 py-1 rounded-lg'
       },
       script: ""
     }
   })
 
-
+  if(!session.data) return;
   const generateVideo = async() => {
     console.log("triggered")
     const validForm = await methods.trigger("script");

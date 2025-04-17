@@ -6,7 +6,7 @@ import { CAPTION_COMPONENTS, type CaptionStyleName } from '../../../../lib/custo
 import type { Caption } from '@/lib/custom_types/caption';
 
 function RemotionComposition({videoData,captionStyle} : {videoData:{
-    audioUrl: string;
+    audioUrl: string | undefined | null ;
     images?: any;
     captionJson?: any;
 },captionStyle : CaptionStyleName}) {
