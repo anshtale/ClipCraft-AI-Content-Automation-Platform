@@ -1,13 +1,16 @@
 import { useCurrentGroupIndex, useDynamicallyGroupedCaptions } from "../../../../../hooks/use-captions";
-import type { Caption } from "../../../../../lib/custom_types/caption";
+import type { Caption, RootVideoData } from "../../../../../lib/custom_types/caption";
 
 import { useMemo } from "react";
 
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 
 
-function GahaziCaption({videoData} : {videoData : DirectVideoData}) {
+function GahaziCaption({videoData} : {videoData : {
+  audioUrl: string;
+  images?: any;
+  captionJson?: any;
+}}) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 

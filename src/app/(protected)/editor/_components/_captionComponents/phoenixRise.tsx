@@ -1,13 +1,16 @@
 import { useCurrentGroupIndex, useIshanSharmaCaptions } from "../../../../../hooks/use-captions";
 
-import type { Caption } from "../../../../../lib/custom_types/caption";
+import type { Caption, RootVideoData } from "../../../../../lib/custom_types/caption";
 
-import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 import React, { useMemo } from 'react'
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
 
 
-function PhoenixRise({videoData} : {videoData : DirectVideoData }) {
+function PhoenixRise({videoData} : {videoData : {
+  audioUrl: string;
+  images?: any;
+  captionJson?: any;
+} }) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 

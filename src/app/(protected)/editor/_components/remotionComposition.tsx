@@ -3,9 +3,13 @@ import type { JsonArray } from 'inngest/helpers/jsonify';
 import React, {  useMemo  } from 'react'
 import { AbsoluteFill, Audio, Img, interpolate, Sequence, useCurrentFrame, useVideoConfig } from 'remotion';
 import { CAPTION_COMPONENTS, type CaptionStyleName } from '../../../../lib/custom_types/captionComponent';
-import type { Caption, DirectVideoData } from '@/lib/custom_types/caption';
+import type { Caption } from '@/lib/custom_types/caption';
 
-function RemotionComposition({videoData,captionStyle} : {videoData:DirectVideoData,captionStyle : CaptionStyleName}) {
+function RemotionComposition({videoData,captionStyle} : {videoData:{
+    audioUrl: string;
+    images?: any;
+    captionJson?: any;
+},captionStyle : CaptionStyleName}) {
     const { fps } = useVideoConfig()
     const frame = useCurrentFrame();
 

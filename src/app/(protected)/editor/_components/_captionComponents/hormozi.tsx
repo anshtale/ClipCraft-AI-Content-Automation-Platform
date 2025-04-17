@@ -2,13 +2,17 @@
 import React, {  useMemo } from 'react'
 
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
-import type { Caption } from "../../../../../lib/custom_types/caption";
+import type { Caption, RootVideoData } from "../../../../../lib/custom_types/caption";
 
 import {  getScaleInterpolation } from '../../../../../lib/animation-utils';
 import { useCurrentGroupIndex, useGroupedCaptions } from "../../../../../hooks/use-captions";
 import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 
-function HormoziCaption({videoData} : {videoData : DirectVideoData}) {
+function HormoziCaption({videoData} : {videoData : {
+  audioUrl: string;
+  images?: any;
+  captionJson?: any;
+}}) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 

@@ -3,12 +3,13 @@ import { z } from "zod";
 
 import {
   protectedProcedure,
-  publicProcedure,
 } from "@/server/api/trpc";
 import { generateScript } from "@/lib/gemini";
 import { createVideoSchema } from "@/lib/custom_types/createForm";
 import { inngest } from "@/inngest/client";
 import { TRPCError } from "@trpc/server";
+import {getRenderProgress, renderMediaOnLambda} from "@remotion/lambda/client"
+import { RootVideoDataSchema } from "@/lib/custom_types/caption";
 
 export const projectRouter = createTRPCRouter({
   getScript: protectedProcedure.input(z.object({
@@ -37,7 +38,6 @@ export const projectRouter = createTRPCRouter({
         ...input
       }
     });
-
     return response;
   }),
 
@@ -124,7 +124,35 @@ export const projectRouter = createTRPCRouter({
     }
 
     return response;
-  })
+  }),
 
-  
+  renderVideo : protectedProcedure.input(z.object({
+    videoData : z.object({
+      captionJson: z.any(),
+      images: z.any(),
+      audioUrl: z.string(),
+    }),
+    captionStyle : z.string()
+  })).mutation(async ({ctx,input})=>{
+    // console.log("triggered");
+    const functionName = process.env.REMOTION_RENDER_AWS_FUNCTION_NAME!;
+
+    const inputProps = {
+      videoData : input.videoData,
+      captionStyle : input.captionStyle
+    }
+
+    const renderMedia = await renderMediaOnLambda({
+      functionName,
+      inputProps: inputProps,
+      region:'us-east-1',
+      serveUrl : 'caption-generator',
+      codec : 'h264',
+      composition:'renderer',
+      framesPerLambda : 20
+    })
+
+
+    return renderMedia;
+  })
 })

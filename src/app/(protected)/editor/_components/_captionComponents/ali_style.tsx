@@ -1,13 +1,16 @@
 import { useCurrentGroupIndex, useGroupedCaptions } from "../../../../../hooks/use-captions";
 import { getWordOpacity } from "../../../../../lib/animation-utils";
-import type { Caption } from "../../../../../lib/custom_types/caption";
+import type { Caption, RootVideoData } from "../../../../../lib/custom_types/caption";
 
-import type { DirectVideoData } from "../../../../../lib/custom_types/caption";
 import { useMemo } from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 
 
-export function AliStyle({videoData} : {videoData : DirectVideoData}) {
+export function AliStyle({videoData} : {videoData : {
+  audioUrl: string;
+  images?: any;
+  captionJson?: any;
+}}) {
     const frame = useCurrentFrame();
       const { fps } = useVideoConfig();
     

@@ -10,6 +10,7 @@ import BackArrow from "./back_arrow"
 import Export from "./export"
 import VideoDetails from "./videoDetails"
 import Link from "next/link"
+import { useQueryClient } from "@tanstack/react-query"
 
 export default function VideoInfo() {
   const videoData = useVideoDataStore((state) => state.videoData)
@@ -17,8 +18,8 @@ export default function VideoInfo() {
   const duration = useVideoDataStore((state)=>state.durationInFrames);
 
   const [isExporting, setIsExporting] = useState(false)
-
-  const handleExport = () => {
+  
+  const handleExport = async() => {
     setIsExporting(true)
     // Simulate export process
     setTimeout(() => {
