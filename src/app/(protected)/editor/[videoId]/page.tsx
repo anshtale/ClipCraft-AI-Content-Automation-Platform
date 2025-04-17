@@ -9,6 +9,7 @@ import { useVideoDataStore } from "@/store"
 import type { CaptionStyleName } from "../../../../lib/custom_types/captionComponent"
 import { useShallow } from "zustand/shallow"
 import Spinner from "../_components/spinner"
+import type { CaptionObject } from "@/lib/custom_types/caption"
 
 function EditorPage() {
     const { videoId } = useParams();
@@ -24,7 +25,8 @@ function EditorPage() {
     useEffect(() => {
         if (responseVideoData) {
             setVideoData(responseVideoData);
-            setCaptionStyle(responseVideoData.videoStyle as CaptionStyleName)
+            const CaptionObject = responseVideoData.caption as CaptionObject
+            setCaptionStyle(CaptionObject.name as CaptionStyleName)
             setLoading(false);
         }
     }, [responseVideoData, setVideoData, setCaptionStyle])

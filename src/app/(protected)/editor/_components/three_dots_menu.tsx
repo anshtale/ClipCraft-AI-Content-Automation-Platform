@@ -26,9 +26,6 @@ function ThreeDotsMenu() {
                 Share Project {"(coming soon!)"}
                 </span>
               </DropdownMenuItem>
-              <DropdownMenuItem className='hover:cursor-pointer'>
-                <PenLine className="mr-2 h-4 w-4" /> Rename
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="hover:cursor-pointer text-destructive">Delete Project</DropdownMenuItem>
             </DropdownMenuContent>
