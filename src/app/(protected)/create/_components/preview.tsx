@@ -1,8 +1,10 @@
-import type { CreateVideoForm } from '@/lib/custom_types/createForm'
+
 import React from 'react'
 import { options } from './videoStyle';
 import Image from 'next/image';
 import type { UseFormReturn } from 'react-hook-form';
+import { Player } from 'node_modules/@remotion/player/dist/cjs/Player';
+import PreviewComposition from './previewComposition';
 
 function Preview({methods} : {
     methods:UseFormReturn<{
@@ -28,18 +30,17 @@ function Preview({methods} : {
     }>
 }) {
     
-    const selectedStyle = options.find((option)=>option.name === methods.getValues().videoStyle)
+    const selectedStyle = options.find((option)=>option.name === methods.getValues().videoStyle)!
 
     const caption = methods.getValues().captionStyle
 
     if(!selectedStyle || !caption) return;
     return (
-        <div className='relative'>
-            <Image src={selectedStyle.image} alt={selectedStyle.name}
-            width={1000}
-            height={300}
-            className='w-full h-[70vh] object-cover rounded-xl'/>
-            <h2 className={`${caption.style} absolute text-center bottom-7 w-full`}>{caption.name}</h2>
+        <div>
+            <Player component={PreviewComposition} durationInFrames={200} compositionWidth={720} compositionHeight={1280} fps={30} controls style={{
+                width: '25vw',
+                height: '70vh'
+            }} inputProps={{caption,selectedStyle}} />
         </div>
     )
 }

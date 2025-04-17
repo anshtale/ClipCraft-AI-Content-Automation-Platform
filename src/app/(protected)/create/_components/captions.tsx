@@ -2,24 +2,20 @@ import { useFormContext } from "react-hook-form";
 import type { CreateVideoForm } from "@/lib/custom_types/createForm";
 export const options = [
     {
-        name: 'Youtuber',
+        name: 'ALI_STYLE',
         style: 'text-yellow-400 text-3xl font-extrabold uppercase tracking-wide drop-shadow-md px-3 py-1 rounded-lg'
     },
     {
-        name: 'Supreme',
+        name: 'GAHAZI',
         style:'text-white text-3xl font-bold italic drop-shadow-lg tracking-wide px-3 py-1 rounded-lg'
     },
     {
-        name: 'Neon',
+        name: 'HORMOZI',
         style:'text-green-500 text-3xl font-extrabold uppercase drop-shadow-lg tracking-wide px-3 py-1 rounded-lg'
     },
     {
-        name: 'Glitch',
+        name: 'PHOENIXRISE',
         style: "text-pink-500 text-3xl font-extrabold uppercase drop-shadow-[4px_4px_0_rgba(0,0,0,0.2)]tracking-wide px-3 py-1 rounded-lg"
-    },
-    {
-        name: "Fire",
-        style: "text-red-500 text-3xl font-extrabold uppercase drop-shadow tracking-wide px-3 py-1 rounded-lg"
     }
 ]
 
