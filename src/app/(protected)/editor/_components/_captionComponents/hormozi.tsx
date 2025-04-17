@@ -38,6 +38,7 @@ function HormoziCaption({videoData} : {videoData:{
     >
       <div
         style={{
+          marginBottom : '150px',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
@@ -63,7 +64,7 @@ function HormoziCaption({videoData} : {videoData:{
               key={index}
               style={{
                 margin: '0 8px',
-                fontSize: isActive ? '20px' : '15px',
+                fontSize: isActive ? '40px' : '35px',
                 fontWeight: 'normal',
                 fontFamily: 'Impact, sans-serif',
                 color: isActive ? '#FF9500' : '#FFFFFF',
