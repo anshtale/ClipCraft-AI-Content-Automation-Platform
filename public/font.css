@@ -1,0 +1,15 @@
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('/fonts/coolvetica.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'EuropaGroteskSH';
+    src: url('/fonts/EuropaGroteskSH.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'KeplerStd-BoldScnItDisp';
+    src: url('/fonts/KeplerStd-BoldScnItDisp.ttf') format('truetype');
+}
+
