@@ -5,15 +5,31 @@ import { api } from "@/trpc/react";
 import { RefreshCcw } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react"
 
 function VideoList() {
+    // const router = useRouter();
     const [pendingVideoIds, setPendingVideoIds] = useState<string[]>([]);
     
-    const { status, data: videoData,refetch:getVideoList } = api.project.getUserVideos.useQuery(undefined, {
+    const { status, data: videoData,refetch:getVideoList,error } = api.project.getUserVideos.useQuery(undefined, {
         refetchOnWindowFocus: false,
         refetchOnMount: false
     })
+
+    // if(error && error.data?.code === 'UNAUTHORIZED'){
+    //    return router.push('/api/signin');
+    // }
+
+    useEffect(() => {
+        if(videoData) {
+            const pendingIds = videoData
+                .filter(video => video.status === "pending")
+                .map(video => video.id);
+                
+            setPendingVideoIds(pendingIds);
+        }
+    }, [videoData]);
 
     const { 
         data: pendingVideosStatus 
@@ -26,15 +42,6 @@ function VideoList() {
         }
     );
 
-    useEffect(() => {
-        if(videoData) {
-            const pendingIds = videoData
-                .filter(video => video.status === "pending")
-                .map(video => video.id);
-                
-            setPendingVideoIds(pendingIds);
-        }
-    }, [videoData]);
 
     useEffect(() => {
         if (pendingVideosStatus && videoData) {

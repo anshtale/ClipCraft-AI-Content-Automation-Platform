@@ -4,6 +4,7 @@ import { StartSpeechSynthesisTaskCommand, PollyClient, OutputFormat, VoiceId, ty
 import {generateImagePrompts} from "../lib/gemini"
 import axios from "axios"
 import { db } from "@/server/db";
+import type { CaptionStyleName } from "@/lib/custom_types/captionComponent";
 
 // Get the original event type
 type InngestEvent = {
@@ -14,6 +15,20 @@ type InngestEvent = {
     user?: any;
     v?: string | undefined;
 };
+
+type InngestEventRender = {
+    name: string;
+    ts?: number | undefined;
+    id?: string | undefined;
+    data?: RenderInputProps;
+    user?: any;
+    v?: string | undefined;
+}
+
+type RenderInputProps = {
+    videoData : VideoData,
+    captionStyle : CaptionStyleName
+}
 
 type VideoData = {
     title: string,
@@ -29,10 +44,10 @@ type VideoData = {
 }
 
 const pollyClient = new PollyClient({
-    region: process.env.AWS_REGION!,
+    region: process.env.POLLY_AWS_REGION!,
     credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY!,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!
+        accessKeyId: process.env.POLLY_AWS_ACCESS_KEY!,
+        secretAccessKey: process.env.POLLY_AWS_SECRET_ACCESS_KEY!
     }
 });
 
@@ -66,7 +81,7 @@ export const generateVideoData = inngest.createFunction(
     }) => {
         const params = {
             OutputFormat: OutputFormat.MP3 as OutputFormat,
-            OutputS3BucketName: process.env.AWS_BUCKET_NAME!,
+            OutputS3BucketName: process.env.POLLY_AWS_BUCKET_NAME!,
             Text: event.data?.script || "",
             TextType: "text" as TextType,
             VoiceId: VoiceId.Joey,

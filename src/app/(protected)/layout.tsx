@@ -3,6 +3,7 @@ import { SessionProvider } from 'next-auth/react';
 import { AuthGuard } from './authGuard';
 import { Suspense } from 'react';
 import CenteredSpinner from '../_components/spinner';
+import '../../../public/font.css';
 
 function Layout({ children }: { children: React.ReactNode }) {
     return (
