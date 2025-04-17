@@ -36,7 +36,7 @@ function Preview({methods} : {
 
     if(!selectedStyle || !caption) return;
     return (
-        <div>
+        <div >
             <Player component={PreviewComposition} durationInFrames={200} compositionWidth={720} compositionHeight={1280} fps={30} controls style={{
                 width: '25vw',
                 height: '70vh'

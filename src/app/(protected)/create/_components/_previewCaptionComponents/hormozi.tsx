@@ -30,19 +30,24 @@ function HormoziCaption() {
       style={{
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginBottom: '100px'
+
       }}
     >
       <div
         style={{
+          marginBottom : '150px',
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: 'rgba(0, 0, 0, 0.7)',
-          padding: '15px 25px',
+          // padding: '25px 25px 25px 25px',
+          paddingLeft:'25px',
+          paddingRight: '25px',
+          paddingTop:'25px',
+          paddingBottom: '25px',
           borderRadius: '8px',
-          maxWidth: '80%',
+          maxWidth: '100%',
         }}
       >
         {currentGroup && currentGroup.map((caption, index) => {
@@ -60,7 +65,7 @@ function HormoziCaption() {
               key={index}
               style={{
                 margin: '0 8px',
-                fontSize: isActive ? '20px' : '15px',
+                fontSize: isActive ? '40px' : '35px',
                 fontWeight: 'normal',
                 fontFamily: 'Impact, sans-serif',
                 color: isActive ? '#FF9500' : '#FFFFFF',

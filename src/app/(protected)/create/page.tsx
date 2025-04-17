@@ -8,7 +8,7 @@ import VideoStyle from "./_components/videoStyle"
 import VoiceOptions from "./_components/voiceOptions"
 import Captions from "./_components/captions"
 import { Button } from "@/components/ui/button"
-import { Loader2Icon, WandSparkles } from "lucide-react"
+import { ArrowUp, Loader2Icon, WandSparkles } from "lucide-react"
 import Preview from "./_components/preview"
 import { toast } from "sonner"
 import { api } from "@/trpc/react"
@@ -125,6 +125,14 @@ function CreatePage() {
         </div>
         <div className="mt-8">
           <Preview methods={methods} />
+          <div className="flex items-center justify-center mt-1">
+            {/* <ArrowUp className= "animate-bounce w-0.5 h-0.5 "/> */}
+            <div className="animate-bounce">
+              <span className=" text-gray-400 text-sm p-0.5">⬆️  </span>
+              <span className="text-gray-400 text-sm">Watch your story come alive!</span>
+            </div>
+
+          </div>
         </div>
       </div>
       
