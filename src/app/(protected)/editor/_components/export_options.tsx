@@ -2,7 +2,7 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { cn, downloadFile } from '@/lib/utils'
 import { useEffect, useState } from 'react'
 import Spinner from './spinner'
 
@@ -20,10 +20,8 @@ function ExportOptions() {
     const [renderId, setRenderId] = useState<string | null>(null);
     const [bucketName, setBucketName] = useState<string | null>(null);
     const captionStyle = useVideoDataStore((state) => state.captionStyle);
-    const [currentStatus, setCurrentStatus] = useState<string>('')
     const [progress, setProgress] = useState<number>(0)
     const [outputUrl, setOutputUrl] = useState<string>("");
-
     const [isExporting, setIsExporting] = useState(false)
     const [exportQuality, setExportQuality] = useState('STD')
 
@@ -50,7 +48,6 @@ function ExportOptions() {
 
     const handleExport = async () => {
         console.log('triggered')
-        setCurrentStatus('');
         setOutputUrl("");
 
         if (exportQuality === 'HQ') {
@@ -85,6 +82,7 @@ function ExportOptions() {
             setRenderId(null);
             setBucketName(null);
             setProgress(0);
+            downloadFile(data.url,"out.mp4")
         } else if(data.type === "error") {
             toast.error("Error occurred while rendering the video!");
             setIsExporting(false);
@@ -153,8 +151,7 @@ function ExportOptions() {
                             <LinearProgressWithLabel value={progress} />
                         </Box>
                         <div className='flex p-2 w-full items-center justify-center'>
-                            <span className='animate-[slide-up_1s_ease-out] text-sm text-gray-500'>Rendering may take 5-10mins depending upon video length
-
+                            <span className='animate-[slide-up_1s_ease-out] text-sm text-gray-500'>Rendering may take 2-5mins depending upon video length
                             </span>
                         </div>
                     </div>
