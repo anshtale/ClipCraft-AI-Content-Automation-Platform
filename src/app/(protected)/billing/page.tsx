@@ -6,15 +6,18 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { api } from "@/trpc/react"
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { createCheckoutSession } from "@/server/stripe";
 
 function Billing() {
     const session = useSession();
     const user = session.data?.user;
-
+    const router = useRouter()
+    const updateUserCredits = api.project.updateCredits.useMutation();
     const [creditsToBuy,setCreditsToBuy] = useState<number[]>([100]);
 
     const creditsToBuyAmount = creditsToBuy[0]!
-    const price = ((0.6 * (creditsToBuyAmount)).toFixed(2))
+    const price = Number((0.6 * (creditsToBuyAmount)).toFixed(2));
 
     return (
         <div>
@@ -35,8 +38,8 @@ function Billing() {
 
             </Slider>
             <div className="h-4"></div>
-            <Button onClick={()=>{
-                // createCheckoutSession(creditsToBuyAmount)
+            <Button className = "hover:cursor-pointer" onClick={()=>{
+                createCheckoutSession(creditsToBuyAmount)
             }}>
                 Buy {creditsToBuyAmount} credits for ${price}
             </Button>
