@@ -11,7 +11,7 @@ import NextTopLoader from 'nextjs-toploader';
 export const metadata: Metadata = {
   title: "ClipCraft - AI",
   description: "Content Creation Automation Platform",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "/clipcraft_logo.png" }],
 };
 
 const inter = Inter({

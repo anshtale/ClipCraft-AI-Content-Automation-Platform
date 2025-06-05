@@ -93,6 +93,8 @@ function CreatePage() {
       onSuccess: (data) => {
         console.log(data)
         toast.success('Generating your video!')
+        router.refresh();
+        router.push('/dashboard')
       },
       onError:(e)=>{
         toast.error('Error in generating your video')
