@@ -189,6 +189,19 @@ export const projectRouter = createTRPCRouter({
       progress: Math.max(0.03,renderProgress.overallProgress)
     }
 
+  }),
+
+  updateCredits : protectedProcedure.input(z.object({
+    credits : z.number()
+  })).mutation(async({ctx,input})=>{
+    return await ctx.db.user.update({
+      where:{
+        id:ctx.session.user.id
+      },
+      data:{
+        credits: {increment : input.credits}
+      }
+    })
   })
 
 })
