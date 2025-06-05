@@ -7,7 +7,7 @@ import { ContainerTextFlip } from "@/components/ui/container-text-flip";
 
 export const HeroSection = () => {
     return (
-        <section className="w-full flex flex-col items-center relative overflow-hidden pt-16 md:pt-24 lg:pt-32 pb-16">
+        <section className="w-full flex flex-col items-center relative overflow-hidden pt-28 md:pt-32 lg:pt-36 pb-16">
             {/* Background gradient */}
             <div
                 className="max-w-full absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 opacity-20 z-0"
@@ -27,21 +27,21 @@ export const HeroSection = () => {
                 </div>
 
                 <div className="text-center max-w-4xl mx-auto">
-                    <div className="flex font-display tracking-tighter text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80 items-center justify-center gap-1">
+                    <div className="flex font-display tracking-tighter text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gray-200 via-white to-gray-200 items-center justify-center gap-1">
                         <div>
                             Create
                         </div>
-                        <div >
+                        <div className="m-0.5">
                             <ContainerTextFlip
                                 words={["viral", "trending", "awesome"]}
                             />
                         </div>
                     </div>
 
-                    <div className="items-center tracking-tighter justify-center flex font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/80">
-                        <div className="flex text-white tracking-tighter font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 bg-clip-text bg-gradient-to-r from-white to-white/80 items-center justify-center gap-2">
+                    <div className="items-center tracking-tighter justify-center flex font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
+                        <div className="flex tracking-tighter font-display text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-gray-300 via-white to-gray-300 items-center justify-center gap-2">
                             reels in
-                            <span className="relative tracking-tighter inline-block">
+                            <span className="relative tracking-tighter text-4xl md:text-5xl lg:text-6xl xl:text-7xl inline-block bg-gradient-to-r from-orange-300 to-orange-400 text-transparent bg-clip-text">
                                 minutes
                                 <svg
                                     className="absolute top-full left-0 w-full h-12 mt-1"
