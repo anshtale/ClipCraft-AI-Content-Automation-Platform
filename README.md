@@ -24,8 +24,6 @@ https://github.com/user-attachments/assets/afbf8486-dbdb-4f78-9a0e-7e4266731ee2
 https://github.com/user-attachments/assets/c9d64cb5-21fd-4baa-b301-f921f30c22b6
 
 
-
-
 ## Key Features
 ### 🎨 AI-Powered Content Generation
 - Transform simple scripts into complete videos automatically
@@ -44,3 +42,15 @@ https://github.com/user-attachments/assets/c9d64cb5-21fd-4baa-b301-f921f30c22b6
 - Automated synchronization of audio and subtitles
 - Intelligent content assembly
 ClipCraft combines the power of AI with cloud technology to revolutionize content creation, making it faster and easier than ever to produce attention-grabbing reels that resonate with your audience.
+
+## Technologies Used
+- **Frontend:** Next.js, React, Tailwind CSS, Remotion
+- **Backend:**
+  - Workflow Orchestration: Inngest
+  - Cloud Video Rendering: AWS Lambda
+  - Database: PostgreSQL (managed via NeonDB)
+  - Authentication: NextAuth.js
+- **AI Technologies:**
+  - Image & Text Generation: Google Gemini
+  - Text-to-Speech: AWS Polly
+  - Speech-to-Text/Captioning: Deepgram
