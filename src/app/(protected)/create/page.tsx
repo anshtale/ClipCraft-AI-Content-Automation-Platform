@@ -41,6 +41,7 @@ function CreatePage() {
   })
 
   if(!session.data) return;
+  
   const generateVideo = async() => {
     console.log("triggered")
     const validForm = await methods.trigger("script");

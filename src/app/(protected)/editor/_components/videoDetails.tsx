@@ -8,6 +8,7 @@ import React from 'react'
 function VideoDetails() {
 
     const videoData = useVideoDataStore((state) => state.videoData)
+    const captionStyle = useVideoDataStore((state)=>state.captionStyle) as string;
 
     const duration = useVideoDataStore((state) => state.durationInFrames);
 
@@ -45,13 +46,13 @@ function VideoDetails() {
                                     <div className="space-y-2">
                                         <div className="text-sm font-medium">Video Style</div>
                                         <div className="flex gap-2">
-                                            <Badge>{videoData.videoStyle || "Cartoon"}</Badge>
+                                            <Badge>{captionStyle}</Badge>
                                         </div>
                                     </div>
                                     <div className="space-y-2">
                                         <div className="text-sm font-medium">Aspect Ratio</div>
                                         <div className="flex gap-2">
-                                            <Badge variant="outline">16:9</Badge>
+                                            <Badge variant="outline">9:16</Badge>
                                         </div>
                                     </div>
                                 </div>
