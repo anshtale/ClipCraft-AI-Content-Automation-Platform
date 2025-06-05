@@ -1,69 +1,32 @@
-import Link from "next/link";
+import CtaSection from "./_components/home_page/ctaSection";
+import FeaturesSection from "./_components/home_page/featureSection";
+import Footer from "./_components/home_page/footer";
+import HeroSection from "./_components/home_page/heroSection";
+import NavBar from "./_components/home_page/navBar";
+import PricingSection from "./_components/home_page/pricingSection";
+import ShowcaseSection from "./_components/home_page/showcaseSection";
+import SocialProofSection from "./_components/home_page/socialProofSection";
+import TemplatesSection from "./_components/home_page/templatesSection";
+import VideoSection from "./_components/home_page/videoSection";
 
-import { LatestPost } from "@/app/_components/post";
-import { auth } from "@/server/auth";
-import { api, HydrateClient } from "@/trpc/server";
-
-export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
-  const session = await auth();
-
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
-
+const Page = () => {
   return (
-    <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-        <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
-          <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-            Create <span className="text-[hsl(280,100%,70%)]">T3</span> App
-          </h1>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8">
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/usage/first-steps"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">First Steps →</h3>
-              <div className="text-lg">
-                Just the basics - Everything you need to know to set up your
-                database and authentication.
-              </div>
-            </Link>
-            <Link
-              className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 hover:bg-white/20"
-              href="https://create.t3.gg/en/introduction"
-              target="_blank"
-            >
-              <h3 className="text-2xl font-bold">Documentation →</h3>
-              <div className="text-lg">
-                Learn more about Create T3 App, the libraries it uses, and how
-                to deploy it.
-              </div>
-            </Link>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-2xl text-white">
-              {hello ? hello.greeting : "Loading tRPC query..."}
-            </p>
-
-            <div className="flex flex-col items-center justify-center gap-4">
-              <p className="text-center text-2xl text-white">
-                {session && <span>Logged in as {session.user?.name}</span>}
-              </p>
-              <Link
-                href={session ? "/api/auth/signout" : "/api/auth/signin"}
-                className="rounded-full bg-white/10 px-10 py-3 font-semibold no-underline transition hover:bg-white/20"
-              >
-                {session ? "Sign out" : "Sign in"}
-              </Link>
-            </div>
-          </div>
-
-          {session?.user && <LatestPost />}
-        </div>
+    <div className="min-h-screen bg-slate-900 text-white w-full">
+      <div className="w-full flex items-center justify-center">
+        <NavBar />
+      </div>
+      <main className="m-2 justify-center flex flex-col min-h-screen">
+          <HeroSection />
+          <VideoSection />
+          <SocialProofSection />
+          {/* <ShowcaseSection /> */}
+          <FeaturesSection />
+          <TemplatesSection />
+          <PricingSection/>
+          <CtaSection />
       </main>
-    </HydrateClient>
+    </div>
   );
-}
+};
+
+export default Page;
