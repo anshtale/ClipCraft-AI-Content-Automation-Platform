@@ -1,29 +1,56 @@
-# Create T3 App
+<h1 align="center">
+  ClipCraft-AI-Content-Automation-Platform
+</h1>
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+<p align="center"> ClipCraft revolutionizes 🎬video creation, enabling users to produce engaging,⚡viral reels with AI-powered animated subtitles and 🎬Remotion. Simply provide a script, and ClipCraft automatically generates images, audio, and subtitles. Leveraging cutting-edge 🤖 AI like Google Gemini, AWS Polly, and Deepgram, alongside robust ☁️cloud infrastructure including Inngest and AWS Lambda, ClipCraft ensures seamless, high-quality video production. Create professional, trendy content effortlessly and captivate your audience.
+</p>
 
-## What's next? How do I make an app with this?
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/ca6b483c-543b-4cba-af18-dea262925b6b" alt="clipcraft" />
+</p>
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+# Outputs/Examples
+## Output 1
+*   **Topic:** Movie Story
+*  **Script:** The chilling 911 call crackled with static. A woman's terrified whisper, barely audible, "He's here...in the house."  Silence. Then, a scream.  Detectives arrived to find a scene of unspeakable violence. A meticulous investigation revealed a trail of deceit, leading to a shocking suspect: someone close to the victim.  The motive?  A twisted web of betrayal and greed.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+https://github.com/user-attachments/assets/afbf8486-dbdb-4f78-9a0e-7e4266731ee2
 
-## Learn More
+## Output 2
+*   **Topic:** Horror Story
+*  **Script:** A chilling discovery. A missing person, Jane Doe, vanished without a trace.  Weeks later, a cryptic note surfaced, leading detectives to a secluded cabin.  Inside, they found disturbing evidence: a bloodstained knife, a torn photograph, and a chilling message scrawled on the wall: 'She knows too much.'
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+https://github.com/user-attachments/assets/c9d64cb5-21fd-4baa-b301-f921f30c22b6
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## Key Features
+### 🎨 AI-Powered Content Generation
+- Transform simple scripts into complete videos automatically
+- Generate matching images, audio, and subtitles using advanced AI
+- Create engaging animated captions with trending styles
+### ⚡ Cloud Rendering with AWS Lambda
+- Seamless cloud-based video rendering
+- Scalable infrastructure for quick processing
+- No local resources required
+### 🎬 Smart Subtitle Animation
+- Trendy animated subtitles using Remotion
+- Dynamic text effects that capture attention
+- Professional-looking captions that boost engagement
+### 🤖 End-to-End Automation
+- One-click video generation from scripts
+- Automated synchronization of audio and subtitles
+- Intelligent content assembly
+ClipCraft combines the power of AI with cloud technology to revolutionize content creation, making it faster and easier than ever to produce attention-grabbing reels that resonate with your audience.
 
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Technologies Used
+- **Frontend:** Next.js, React, Tailwind CSS, Remotion
+- **Backend:**
+  - Workflow Orchestration: Inngest
+  - Cloud Video Rendering: AWS Lambda
+  - Database: PostgreSQL (managed via NeonDB)
+  - Authentication: NextAuth.js
+- **AI Technologies:**
+  - Image & Text Generation: Google Gemini
+  - Text-to-Speech: AWS Polly
+  - Speech-to-Text/Captioning: Deepgram
