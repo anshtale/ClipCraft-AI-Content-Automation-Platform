@@ -84,7 +84,7 @@ export const HeroSection = () => {
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
 
-                        <Link href={'/api/auth/signin'}>
+                        <Link href={'/create'}>
                             <Button className="hover:cursor-pointer w-full sm:w-auto bg-gradient-to-r from-pink-500 to-violet-600 hover:from-pink-600 hover:to-violet-700 tracking-tighter text-white text-lg py-6 px-8 animate-pulse-glow rounded-xl">
                                 Start Creating For Free
                             </Button>
