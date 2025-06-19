@@ -2,6 +2,7 @@ import React from "react";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export const PricingSection = () => {
   return (
@@ -26,14 +27,12 @@ export const PricingSection = () => {
               </div>
               <p className="text-white/70 mb-6">Perfect for casual creators just getting started</p>
 
-              <Button className="mb-8 bg-white/10 hover:bg-white/20 text-white">Get Started</Button>
-
               <div className="space-y-4 mt-auto">
                 <div className="flex items-start gap-3">
                   <div className="bg-white/10 rounded-full p-1">
                     <Check className="h-4 w-4 text-green-400" />
                   </div>
-                  <span className="text-sm text-white/70">5 videos per month</span>
+                  <span className="text-sm text-white/70">3 Credits</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="bg-white/10 rounded-full p-1">
@@ -59,21 +58,12 @@ export const PricingSection = () => {
                 <span className="text-white/60">/month</span>
               </div>
               <p className="text-white/70 mb-6">For serious creators ready to grow their audience</p>
-
-              <Button className="mb-8 bg-gradient-to-r from-violet-500 to-pink-500 hover:from-violet-600 hover:to-pink-600 text-white border-0">Choose Plan</Button>
-
               <div className="space-y-4 mt-auto">
                 <div className="flex items-start gap-3">
                   <div className="bg-white/10 rounded-full p-1">
                     <Check className="h-4 w-4 text-green-400" />
                   </div>
-                  <span className="text-sm text-white/70">Unlimited videos</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="bg-white/10 rounded-full p-1">
-                    <Check className="h-4 w-4 text-green-400" />
-                  </div>
-                  <span className="text-sm text-white/70">4K export quality</span>
+                  <span className="text-sm text-white/70">100 Credits/Month</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="bg-white/10 rounded-full p-1">

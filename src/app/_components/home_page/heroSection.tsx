@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import ScribbledText from "./scribbled-text";
 import TiltedText from "./tilted-text";
 import { ContainerTextFlip } from "@/components/ui/container-text-flip";
+import Link from "next/link";
 
 export const HeroSection = () => {
     return (
@@ -82,9 +83,12 @@ export const HeroSection = () => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-                        <Button className="hover:cursor-pointer w-full sm:w-auto bg-gradient-to-r from-pink-500 to-violet-600 hover:from-pink-600 hover:to-violet-700 tracking-tighter text-white text-lg py-6 px-8 animate-pulse-glow rounded-xl">
-                            Start Creating For Free
-                        </Button>
+
+                        <Link href={'/api/auth/signin'}>
+                            <Button className="hover:cursor-pointer w-full sm:w-auto bg-gradient-to-r from-pink-500 to-violet-600 hover:from-pink-600 hover:to-violet-700 tracking-tighter text-white text-lg py-6 px-8 animate-pulse-glow rounded-xl">
+                                Start Creating For Free
+                            </Button>
+                        </Link>
                     </div>
 
                     <p className="text-sm text-muted-foreground">No credit card required • Free plan available</p>
