@@ -18,7 +18,7 @@ const Page = () => {
       <main className="m-2 justify-center flex flex-col min-h-screen">
           <HeroSection />
           <VideoSection />
-          <SocialProofSection />
+          {/* <SocialProofSection /> */}
           {/* <ShowcaseSection /> */}
           <FeaturesSection />
           <TemplatesSection />
